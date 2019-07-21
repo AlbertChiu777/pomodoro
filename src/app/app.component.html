@@ -1,20 +1,58 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="layout">
+  <div [@openTodo]="isOpen ? 'open' : 'closed'"  class="todo">
+    <div class="nav">
+      <div *ngFor="let button of buttons; let i = index"
+            [ngClass]="{'active': button.active}"
+            class="btn-container"
+            (click)="pressButton(i)">
+          <button type="button">{{ button.title}}</button>
+          <span class="bottom-line"></span>
+      </div>
+    </div>
+    <div class="input">
+      <input [(ngModel)]="missionTitle" placeholder="Add a mission" type="text">
+      <div class="input-icon" (click)="addTodoList()"></div>
+    </div>
+    <div class="list">
+      <h2>To Do</h2>
+      <div *ngFor="let todo of todos; let i = index" class="list-container">
+        <input [id]="'todo' + i" type="checkbox" (change)="todoChange(i)">
+        <label [for]="'todo' + i" class="">{{ todo }}</label>
+        <div class="tomatoes"></div>
+        <div class="action" (click)="selectTodo(todo)">
+          <div class="bg">
+            <div class="play"></div>
+          </div>
+        </div>
+        <div class="trigger"></div>
+      </div>
+    </div>
+    <div class="done">
+        <h2>Done</h2>
+        <div *ngFor="let done of dones; let i = index" class="list-container">
+          <input [id]="'done' + i" type="checkbox" [checked]="true" (change)="doneChange(i)">
+          <label [for]="'done' + i" class="">{{ done }}</label>
+          <div class="tomatoes"></div>
+        </div>
+    </div>
+  </div>
+  <div class="promodo">
+    <div class="btn-container">
+      <button class="collapse-trigger" [ngClass]="{'close': this.isOpen}" (click)="this.isOpen = !this.isOpen" type="button"></button>
+    </div>
+    <div class="tomato">
+      <div [ngClass]="{paused: tomatoState === 'paused'}"  class="peach"></div>
+      <div [ngClass]="{paused: tomatoState === 'paused'}"  class="peach"></div>
+      <div class="clock">{{ timeFormat }}</div>
+      <div class="action" (click)="changeState()">
+        <div [ngClass]="{paused: tomatoState === 'paused'}" class="bg">
+          <div [ngClass]="{paused: tomatoState === 'paused'}" class="play"></div>
+        </div>
+      </div>
+    </div>
+    <div class="description">
+      <div>Ready to…</div>
+      <div>{{ selectedTitle }}</div>
+    </div>
+  </div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
